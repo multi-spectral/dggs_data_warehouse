@@ -1,0 +1,98 @@
+### DGGS-based data warehouse for traffic monitoring
+
+
+
+### List of software and design tasks
+
+Below is a list of all current software and design tasks. This list also includes literature review and evaluation-related tasks. However, it does not include writing tasks.
+
+- [x] Literature review
+- [x] DW Design
+    - [x] Schema
+        - [x] Create initial schema adapted from IDEAS paper
+    - [x] Metadata
+        - [x] Identify appropriate metadata storage format
+    - [ ] Indexing
+        - [ ] Identify appropriate indexes
+    - [x] DGGS Selection
+      - [x] Identify which DGGS is most suitable (availability of tools, utility of the hierarchy, comparability of cells, ...)
+- [x] Local DW setup in PostgreSQL
+    - [x] Configure local PostgreSQL instance
+    - [x] Setup script
+        - [x] Write setup script
+        - [x] Run setup script
+    - [x] Install relevant PostgreSQL extensions
+- [ ] ETL and data acquisition
+    - [x] Environment
+        - [x] Identify dependencies (python packages, ...)
+        - [x] ~~Create conda environment~~
+        - [x] ~~Export conda environment to yml~~
+        - [ ] Create yml for pip/virtualenv configuration
+    - [ ] Data acquisition
+        - [ ] Datasets
+            - [x] Maryland AADT
+            - [ ] New York State AADT
+            - [x] Population Density 2020
+            - [x] ~~HERE API Traffic incidents~~
+                - [x] ~~Write API calls and schedule data download~~
+            - [ ] ~~HERE API Traffic flow~~
+                - [ ] ~~Write API calls and schedule data download~~
+            - [x] ~~WorldPop 1km population mosaic~~
+            - [x] LandScan 1km ambient population estimate
+            - [x] LSTW traffic
+            - [x] LSTW weather
+        - [ ] Repeatable functionality
+            - [x] Identify repeatable functionality
+                - [x] Sampling raster data into h3
+                - [x] Sampling vector point data into h3
+                - [ ] ...
+            - [x] Organise as separate tool (build Python module with Rust)
+    - [x] Transform
+        - [x] Identify sampling approach and target data format
+        - [ ] Implement data transformation for each dataset
+          - [x] Maryland AADT
+          - [ ] New York State AADT
+          - [x] Population Density 2020
+          - [x] ~~HERE API Traffic incidents~~
+          - [ ] ~~HERE API Traffic flow~~
+          - [x] ~~WorldPop 1km population mosaic~~
+          - [x] LandScan 1km ambient population estimate
+          - [x] LSTW traffic
+          - [x] LSTW weather
+    - [ ] Load
+        - [x] Test manual loading of datasets into DW
+        - [ ] ~~Automatic loading of certain datasets into DW (eg triggered by data acquisition from API)~~
+        - [x] Create import tool (Rust) to auto-load datasets into PostgreSQL or ClickHouse
+- [ ] OLAP cube implementation
+    - [x] Explore possibilities for cube implementation
+    - [x] Create and compare first implementations of cube operations
+        - [x] Pure SQL
+        - [ ] PostgreSQL extension
+    - [x] Brief comparison of performance
+- [ ] Tests and evaluation
+  - [ ] Effectiveness
+    - [x] Identify suitable software testing approach
+    - [ ] Develop software tests for sample queries (query result=expected)
+        - [ ] cube creation
+        - [ ] other aggregations
+    - [ ] Develop software tests for ETL
+    - [ ] Run tests
+  - [ ] Efficiency
+    - [ ] Write sample queries
+        - [x] To compare to results of Kang et al. 2015
+    - [ ] Evaluate query execution time
+- [ ] Scalability
+    - [x] Configure local Citus cluster
+        - [x] Test manual loading of datasets into Citus
+    - [x] Cloud data warehouse
+      - [x] Identify equivalent functionality
+        - [x] DGGS operations
+        - [x] Structured data types
+        - [x] OLAP cube
+      - [ ] Briefly sketch an analogous approach
+    - [x] Configure local ClickHouse node
+        - [x] Test manual loading of datasets into ClickHouse
+- [ ] Open source
+    - [ ] Replace all local absolute paths with project relative paths
+    - [ ] Check completeness of documentation
+    - [ ] Publish repository

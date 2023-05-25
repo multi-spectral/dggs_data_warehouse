@@ -1,0 +1,12 @@
+{
+    "agg_time_granularity": "day", 
+    "h3_res": 7, 
+    "variables": [
+        {
+            "orig_time_granularity": "instantaneous", 
+            "var_name": "TRAFFIC_EVENT",
+            "agg_method": "count"
+        }
+    ], 
+    "date_range": ["2014-01-01", "2018-02-01"]
+}

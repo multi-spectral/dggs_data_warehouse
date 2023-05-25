@@ -1,0 +1,12 @@
+[workspace]
+
+members = [
+
+	"spherical",
+	"spherical_import"
+]
+
+exclude = [
+	"spherical_py",
+	"spherical_pgx"
+]

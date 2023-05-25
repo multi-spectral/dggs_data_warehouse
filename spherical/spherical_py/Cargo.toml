@@ -1,0 +1,39 @@
+#python integration after https://ilmanzo.github.io/post/writing-python-modules-in-rust-2/
+
+[package]
+name = "spherical_py"
+version = "0.1.0"
+edition = "2021"
+
+# comment this block out to build the binary only and use cargo run
+[lib]
+name="spherical_py"
+crate-type=["cdylib", "rlib"]
+
+# Resolves issues compiling on Mac
+# https://stackoverflow.com/questions/28124221/error-linking-with-cc-failed-exit-code-1
+[target.x86_64-apple-darwin]
+rustflags = [
+    "-Clink-arg", "-undefined",
+    "-Clink-arg", "dynamic-lookup"
+]
+
+[features]
+extension-module = ["pyo3/extension-module"]
+default = ["extension-module"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+spherical = {path = "../spherical"}
+geo = "0.23.1"
+polars = {version="0.27.2", features = ["decompress", "dtype-struct", "cross_join", "serde", "object", "rows"]}
+polars-io = "0.27.2"
+polars-lazy="0.27.2"
+pyo3-polars = "0.2.0"
+proj = "0.27.0"
+h3o = {version="0.3.0", features = ["geo"]}
+pyo3 = {version="0.18.1", features = ["macros", "extension-module"]}
+numpy = "0.18.0"
+serde = "1.0.152"
+hextree = "0.2.0"
