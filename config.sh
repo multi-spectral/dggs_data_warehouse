@@ -62,15 +62,16 @@ case "$(uname -sr)" in
 
 	#Build tools
 	sudo apt-get install build-essential python3-pip cmake unzip pkg-config cargo libproj-dev libsqlite3-dev
-        alias gmake=make
+        sudo apt-get install python3.10-venv python3-pytest
+	alias gmake=make
 
 	echo 'Linux'
 
     # setup virtualenv
-    python -m venv traffic_monitoring_example/config/virtualenv/venv
+    python3 -m venv traffic_monitoring_example/config/virtualenv/venv
     source traffic_monitoring_example/config/virtualenv/venv/bin/activate
-    python -m pip install -r traffic_monitoring_example/config/virtualenv/requirements.txt
-    python -m pip install reusable_etl_functionality/
+    python3 -m pip install -r traffic_monitoring_example/config/virtualenv/requirements.txt
+    python3 -m pip install reusable_etl_functionality/
     deactivate
 
 
