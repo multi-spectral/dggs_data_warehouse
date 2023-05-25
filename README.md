@@ -1,98 +1,34 @@
 ### DGGS-based data warehouse for traffic monitoring
 
 
+### Overview
 
-### List of software and design tasks
 
-Below is a list of all current software and design tasks. This list also includes literature review and evaluation-related tasks. However, it does not include writing tasks.
+The main system is a *domain-independent* data warehouse, in which converted raster, vector, (or in theory other) formats of geospatial data can be stored for arbitrary problem domains. The goal is to allow convenient exploration and analysis of datasets, especially involving integration of multiple datasets.
 
-- [x] Literature review
-- [x] DW Design
-    - [x] Schema
-        - [x] Create initial schema adapted from IDEAS paper
-    - [x] Metadata
-        - [x] Identify appropriate metadata storage format
-    - [ ] Indexing
-        - [ ] Identify appropriate indexes
-    - [x] DGGS Selection
-      - [x] Identify which DGGS is most suitable (availability of tools, utility of the hierarchy, comparability of cells, ...)
-- [x] Local DW setup in PostgreSQL
-    - [x] Configure local PostgreSQL instance
-    - [x] Setup script
-        - [x] Write setup script
-        - [x] Run setup script
-    - [x] Install relevant PostgreSQL extensions
-- [ ] ETL and data acquisition
-    - [x] Environment
-        - [x] Identify dependencies (python packages, ...)
-        - [x] ~~Create conda environment~~
-        - [x] ~~Export conda environment to yml~~
-        - [ ] Create yml for pip/virtualenv configuration
-    - [ ] Data acquisition
-        - [ ] Datasets
-            - [x] Maryland AADT
-            - [ ] New York State AADT
-            - [x] Population Density 2020
-            - [x] ~~HERE API Traffic incidents~~
-                - [x] ~~Write API calls and schedule data download~~
-            - [ ] ~~HERE API Traffic flow~~
-                - [ ] ~~Write API calls and schedule data download~~
-            - [x] ~~WorldPop 1km population mosaic~~
-            - [x] LandScan 1km ambient population estimate
-            - [x] LSTW traffic
-            - [x] LSTW weather
-        - [ ] Repeatable functionality
-            - [x] Identify repeatable functionality
-                - [x] Sampling raster data into h3
-                - [x] Sampling vector point data into h3
-                - [ ] ...
-            - [x] Organise as separate tool (build Python module with Rust)
-    - [x] Transform
-        - [x] Identify sampling approach and target data format
-        - [ ] Implement data transformation for each dataset
-          - [x] Maryland AADT
-          - [ ] New York State AADT
-          - [x] Population Density 2020
-          - [x] ~~HERE API Traffic incidents~~
-          - [ ] ~~HERE API Traffic flow~~
-          - [x] ~~WorldPop 1km population mosaic~~
-          - [x] LandScan 1km ambient population estimate
-          - [x] LSTW traffic
-          - [x] LSTW weather
-    - [ ] Load
-        - [x] Test manual loading of datasets into DW
-        - [ ] ~~Automatic loading of certain datasets into DW (eg triggered by data acquisition from API)~~
-        - [x] Create import tool (Rust) to auto-load datasets into PostgreSQL or ClickHouse
-- [ ] OLAP cube implementation
-    - [x] Explore possibilities for cube implementation
-    - [x] Create and compare first implementations of cube operations
-        - [x] Pure SQL
-        - [ ] PostgreSQL extension
-    - [x] Brief comparison of performance
-- [ ] Tests and evaluation
-  - [ ] Effectiveness
-    - [x] Identify suitable software testing approach
-    - [ ] Develop software tests for sample queries (query result=expected)
-        - [ ] cube creation
-        - [ ] other aggregations
-    - [ ] Develop software tests for ETL
-    - [ ] Run tests
-  - [ ] Efficiency
-    - [ ] Write sample queries
-        - [x] To compare to results of Kang et al. 2015
-    - [ ] Evaluate query execution time
-- [ ] Scalability
-    - [x] Configure local Citus cluster
-        - [x] Test manual loading of datasets into Citus
-    - [x] Cloud data warehouse
-      - [x] Identify equivalent functionality
-        - [x] DGGS operations
-        - [x] Structured data types
-        - [x] OLAP cube
-      - [ ] Briefly sketch an analogous approach
-    - [x] Configure local ClickHouse node
-        - [x] Test manual loading of datasets into ClickHouse
-- [ ] Open source
-    - [ ] Replace all local absolute paths with project relative paths
-    - [ ] Check completeness of documentation
-    - [ ] Publish repository
+The core system is currently implemented using three different data stores, which can be selected by the user. These are ClickHouse, DuckDB, and PostgreSQL. ClickHouse and DuckDB are optimized for OLAP, and can show better performance, whereas the PostgreSQL implementation can also make use of the data cube component.
+
+### Traffic monitoring example
+
+Another important component of this project is the implementation of an example using open data, in order to support a traffic monitoring use case. For more details, see the readme in that folder.
+
+### Config
+
+The configuration of this project consists of two parts: the configuration script `config.sh` and the `config` folder. The `config.sh` script installs all of the tools (note: Ubuntu only) that are needed for the system; the `config` folder contains additional configurations, including the basic schema DDL scripts for the data warehouse.
+
+### Datacube
+
+This folder contains a tool implementing a simple OLAP cube interface for the data warehouse. The interface allows a data cube to be created (within the data warehouse, for now, although future work could include creating or extending a separate system) for this. Additionally, the `rollup`, `drill-down`, `slice`, and `dice` operations can be executed upon the data cube.
+
+### Reusable ETL functionality
+
+This folder contains reusable functionality for ETL scripts.
+
+### Spherical (Load tool)
+
+This folder contains the Rust source code and configuration for the load tool, which imports data in the standardized format into the data warehouse.
+
+
+### Air quality data experiments
+
+This folder contains files related to experiments measuring the query execution time of various aggregations on the data warehouse, given a specific, generated dataset. These queries are versions of the queries in <https://www.tandfonline.com/doi/full/10.1080/17538947.2014.962999>, and the experiment methodology follows their methodology.
