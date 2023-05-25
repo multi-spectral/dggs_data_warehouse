@@ -1,3 +1,5 @@
+These experiments are based on the work of <https://www.tandfonline.com/doi/full/10.1080/17538947.2014.962999>.
+
 In this folder, to generate the air quality dataset, run 
 ```
 python generate_dataset.py
