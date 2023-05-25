@@ -8,6 +8,7 @@ The main system is a *domain-independent* DGGS-based data warehouse, in which co
 
 The core system is currently implemented using three different data stores, which can be selected by the user. These are ClickHouse, DuckDB, and PostgreSQL. ClickHouse and DuckDB are optimized for OLAP, and can show better performance, whereas the PostgreSQL implementation can also make use of the data cube component.
 
+The DGGS used in this project is the open-source [H3 DGGS]<https://github.com/uber/h3> developed by Uber. 
 
 ### Traffic monitoring example
 
@@ -19,11 +20,13 @@ The configuration of this project consists of two parts: the configuration scrip
 
 ### Datacube
 
-This folder contains a tool implementing a simple OLAP cube interface for the data warehouse. The interface allows a data cube to be created (within the data warehouse, for now, although future work could include creating or extending a separate system) for this. Additionally, the `rollup`, `drill-down`, `slice`, and `dice` operations can be executed upon the data cube.
+This folder contains a tool implementing a simple 'DGGS data cube' interface for the data warehouse. The interface allows a data cube to be created (within the data warehouse, for now, although future work could include creating or extending a separate system) for this. The cube interface implements  the `rollup`, `drill-down`, `slice`, and `dice` operations.
 
-### Reusable ETL functionality
+The idea behind this is based on the work of Purss et al. (2019) (Paper here <https://www.utpjournals.press/doi/abs/10.3138/cart.54.1.2018-0017>), that hierarchical operations on a DGGS-based data cube can function based on set theory, rather than on an explicitly defined hierarchy. This is useful because the 
 
-This folder contains reusable functionality for ETL scripts.
+### Reusable extract/transform functionality
+
+This folder contains reusable functionality for extract/transform scripts. These functions are employed in the traffic monitoring example's sample data processing scripts, which are found in `traffic_monitoring_example/scripts`. There is potential for this to be extended.
 
 
 ### Architecture
