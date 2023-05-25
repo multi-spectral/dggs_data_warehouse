@@ -13,7 +13,7 @@ sys.path.append("../../../../datacube")
 
 from interface import *
 
-regenerate_cube = False
+regenerate_cube = True
 
 cube_specification = {
     "date_range": ["2020-01-01", "2020-12-31"],

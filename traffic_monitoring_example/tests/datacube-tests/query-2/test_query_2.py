@@ -13,7 +13,7 @@ sys.path.append("../../../../datacube")
 
 from interface import *
 
-regenerate_cube = False
+regenerate_cube = True
 
 cube_specification = {
     "agg_time_granularity": "year", 
