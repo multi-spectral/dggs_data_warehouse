@@ -41,8 +41,11 @@ case "$1" in
     if [ -n "$PGPASSWORD"]; then
         echo "No password found in PGPASSWORD environment variable."
         echo "If you receive an error, set the PGPASSWORD environment variable to the postgres password."
-        echo "To change the postgres password, run sudo -u $USER -c @ALTER USER $USER PASSWORD '<password>'"
+        echo "To change the postgres password, run sudo -u $USER psql -d ${database_name} -c \"ALTER USER $USER PASSWORD '<password>'\""
         echo "And then run export PGPASSWORD=<password>"
+
+        #sudo -u en_muchos_paises psql -d traffic_monitoring -c "ALTER USER en_muchos_paises PASSWORD '123'"
+
 
     else
         password_arg=":$PGPASSWORD"
