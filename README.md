@@ -8,7 +8,7 @@ The main system is a *domain-independent* DGGS-based data warehouse, in which co
 
 The core system is currently implemented using three different data stores, which can be selected by the user. These are ClickHouse, DuckDB, and PostgreSQL. ClickHouse and DuckDB are optimized for OLAP, and can show better performance, whereas the PostgreSQL implementation can also make use of the data cube component.
 
-The DGGS used in this project is the open-source [H3 DGGS]<https://github.com/uber/h3> developed by Uber. 
+The DGGS used in this project is the open-source H3 DGGS (<https://github.com/uber/h3>) developed by Uber. 
 
 ### Traffic monitoring example
 
