@@ -59,7 +59,7 @@ case "$(uname -sr)" in
     Linux*)
 
 	#Build tools
-	sudo apt-get install build-essential python3-pip cmake unzip pkg-config cargo
+	sudo apt-get install build-essential python3-pip cmake unzip pkg-config cargo libproj-dev libsqlite3-dev
         alias gmake=make
 
 	echo 'Linux'
