@@ -6,7 +6,7 @@ This folder contains an implementation of the data warehousing system for the do
 
 * LSTW Traffic: acquired at https://smoosavi.org/datasets/lstw 
 * LSTW Weather: acquired at https://smoosavi.org/datasets/lstw
-* Maryland AADT https://data.imap.maryland.gov/maps/77010abe7558425997b4fcdab02e2b64
+* Maryland AADT https://data.imap.maryland.gov/maps/77010abe7558425997b4fcdab02e2b64 (download as file)
 * New York State AADT https://www.dot.ny.gov/tdv
 * UK AADF (AADT) https://roadtraffic.dft.gov.uk/downloads
 * France AADT https://www.data.gouv.fr/en/datasets/trafic-moyen-journalier-annuel-sur-le-reseau-routier-national/
