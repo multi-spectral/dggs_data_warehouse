@@ -1,5 +1,6 @@
 ### Overview
 
+This folder contains an implementation of the data warehousing system for the domain of geospatial traffic monitoring data. This domain was chosen because data from a wide variety of regions can be integrated, as well as different original data formats (raster, vector) that include many sparsely distributed datasets.
 
 ### Datasets
 
