@@ -29,6 +29,8 @@ import json
 
 import os
 
+import reusable_etl_functionality.functionality as etl_tools
+
 from tqdm import tqdm
 
 # Check if data is accessible
@@ -55,11 +57,7 @@ main_metadata_dict = {
 
 # Create the export data directory if not exists
 out_path_base = DATA_OUT_PATH
-try:
-    os.makedirs(Path(out_path_base))
-except OSError as err:
-    if "File exists:" in str(err):
-        pass
+etl_tools.make_data_directory(DATA_OUT_PATH)
 
 # Remove the previous csv and otherfiles
 try:

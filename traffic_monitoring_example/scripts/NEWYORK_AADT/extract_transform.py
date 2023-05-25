@@ -8,7 +8,12 @@ import json
 
 from tqdm import tqdm
 
+import reusable_etl_functionality.functionality as etl_tools
+
 """
+
+First must run: 
+
 ogr2ogr -f "ESRI Shapefile" 2019.shp NYSDOT_TDV_AADT_2019.gdb -sql "select AADTLastAct AS value FROM NYSDOT_TDV_AADT_2019" 
 ogr2ogr -f "ESRI Shapefile" 2020.shp AADT_2020.gdb -sql "select  MAT_ALH_2020_csv_AADT AS value FROM Traffic_Station_Locations_AADT2020"
 ogr2ogr -f "ESRI Shapefile" 2021.shp AADT_2021.gdb -sql "select  MAT_ALH_2021_csv_AADT AS value FROM Traffic_Station_Locations_AADT2021"
@@ -27,19 +32,9 @@ DATA_OUT_PATH = "../../datasets/processed/AADT/New York/"
 
 
 # Create the export data directory if not exists (correct way)
-out_path_base = DATA_OUT_PATH
-try:
-    os.makedirs(Path(out_path_base))
-except OSError as err:
-    if "File exists:" in str(err):
-        pass
+etl_tools.make_data_directory(DATA_OUT_PATH)
 
-def get_h3(row):
 
-    lat = row.y
-    lng = row.x
-
-    return h3.geo_to_h3(lat, lng, H3_RES)
 
 main_metadata_dict = main_metadata_dict = {
 
@@ -84,7 +79,7 @@ for i in range(len(data_paths)):
         df.geometry = df.geometry.apply(lambda l: l.representative_point())
 
         # get h3
-        df = df.assign(h3=df.geometry.apply(get_h3))
+        df = df.assign(h3=df.geometry.apply(etl_tools.get_h3))
         
         # concat
         total_df_list.append(df.drop('geometry', axis=1))

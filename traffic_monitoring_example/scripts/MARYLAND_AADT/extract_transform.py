@@ -17,7 +17,7 @@ from datetime import datetime
 
 import os
 
-import spherical_py
+import reusable_etl_functionality.functionality as etl_tools
 
 
 # test if file accessible
@@ -45,11 +45,8 @@ main_metadata_dict = {
 
 # Create the export data directory if not exists
 out_path_base = DATA_OUT_PATH
-try:
-    os.makedirs(Path(out_path_base).parents[0])
-except OSError as err:
-    if "File exists:" in str(err):
-        pass
+
+etl_tools.make_data_directory(out_path_base)
 
 id_vars=['NUM_LANES']
 value_vars= [
@@ -84,18 +81,23 @@ df_long = df.melt(
     value_vars= value_vars,
     variable_name="variable",
     value_name="value"
-).drop_nulls()
+).drop_nulls().to_pandas()
+
+print(df_long)
+print(id_vars)
 
 
 # pass the df and the list of metadata columns to extract_metadata
 # this identifies unique combinations of the metadata values
 # then, a separate version of the metadata entries is created for 
-df_long, df_metadata = spherical_py.extract_metadata(df_long, id_vars)
+df_long, metadata_entries = etl_tools.extract_categorical_variables_as_metadata(df_long, id_vars)
+print(df_long)
+print(metadata_entries)
+
+df_long = pl.from_pandas(df_long)
 
 # map to dictionary
-metadata_entries: dict = df_metadata.to_pandas() \
-                            .drop(columns="metadata_id") \
-                            .to_dict(orient="records")
+
 metadata_entries = [{"original_metadata": d} for d in metadata_entries]
 # add in the global metadata
 for e in metadata_entries:
