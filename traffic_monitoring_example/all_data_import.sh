@@ -21,8 +21,8 @@ declare -a arr=(
 case "$(uname -sr)" in
     Linux*)
 
-    export H3_DUCKDB_EXT_PATH=$HOME/.dggs/h3_duckdb/h3_duckdb_extension/h3.duckdb_extension
-    export PATH=$HOME/.dggs/h3_duckdb/duckdb/:$PATH
+    # environment variables
+    source ../config/env.sh
     ;;
 esac
 

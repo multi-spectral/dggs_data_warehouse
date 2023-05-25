@@ -12,6 +12,8 @@ set -e
 #TODO: check if these are available before installing them
 # Mac: brew list --versions <package>
 # Ideally will create separate postgres in project folder
+
+source config/env.sh
 case "$(uname -sr)" in
 
     Darwin*)
@@ -63,6 +65,13 @@ case "$(uname -sr)" in
         alias gmake=make
 
 	echo 'Linux'
+
+    # setup virtualenv
+    python -m venv traffic_monitoring_example/config/virtualenv/venv
+    source traffic_monitoring_example/config/virtualenv/venv/bin/activate
+    python -m pip install -r traffic_monitoring_example/config/virtualenv/requirements.txt
+    python -m pip install reusable_etl_functionality/
+    deactivate
 
 
     case "$1" in 
@@ -156,9 +165,7 @@ case "$(uname -sr)" in
     cd -
 
 
-    # environment variables
-    export H3_DUCKDB_EXT_PATH=$HOME/.dggs/h3_duckdb/h3_duckdb_extension/h3.duckdb_extension
-    export PATH=$HOME/.dggs/h3_duckdb/duckdb/:$PATH
+    
 
 ;;
 
